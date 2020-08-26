@@ -33,7 +33,7 @@ class PrometheusExporter::Middleware
     MethodProfiler.start
     result = @app.call(env)
     info = MethodProfiler.stop
-
+    result[1]["x-rack-queue-time"] = queue_time.to_s
     result
   ensure
     status = (result && result[0]) || -1
